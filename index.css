@@ -1,0 +1,45 @@
+* { box-sizing: border-box; }
+
+#piano {
+    background-color: darkgray;
+    padding: 40px;
+    display: flex;
+    position: relative;
+}
+
+.white, .black {
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.white {
+    background-color: white;
+    height: 230px;
+    width: 60px;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+.black {
+    background-color: black;
+    height: 170px;
+    width: 34px;
+    position: absolute;
+    z-index: 2;
+}
+
+.white.active {
+    background-color: #e0f7fa;
+    transform: translateY(-4px);
+}
+
+.black.active {
+    background-color: #006064;
+    transform: translateY(-4px);
+}
+
+.black[data-note="C#"] { left: calc(40px + 60px - 17px); }
+.black[data-note="D#"] { left: calc(40px + 120px - 17px); }
+.black[data-note="F#"] { left: calc(40px + 240px - 17px); }
+.black[data-note="G#"] { left: calc(40px + 300px - 17px); }
+.black[data-note="A#"] { left: calc(40px + 360px - 17px); }
