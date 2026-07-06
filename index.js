@@ -1,5 +1,5 @@
 // одна октава: true = чёрная клавиша (диез)
-const notes = [
+const NOTES = [
     { note: "C", sharp: false, file: "C.mp3" },
     { note: "C#", sharp: true, file: "C_sharp.mp3" },
     { note: "D", sharp: false, file: "D.mp3" },
@@ -26,28 +26,31 @@ function playSound(fileName) {
     audio.play().catch(err => console.log("Ошибка воспроизведения:", err));
 };
 
-const keys = notes.map((item) => {
+function createItemKeyListener(event) {
+    const key = event.currentTarget;
+
+    key.classList.add("active");
+    setTimeout(() => {
+        key.classList.remove("active");
+    }, 200);
+
+    playSound(key.dataset.file);
+
+    noteSequence.push(key.dataset.note);
+    recorded.textContent = noteSequence.join(" - ");
+}
+
+function createItemKey(item) {
     const key = document.createElement("div");
     key.classList.add("key");
     key.dataset.note = item.note;
     key.dataset.file = item.file;
-
-    key.classList.add(item.sharp === false ? "white" : "black");
-
-    key.addEventListener("click", () => {
-        key.classList.add("active");
-        setTimeout(() => {
-            key.classList.remove("active");
-        }, 200);
-
-        playSound(key.dataset.file);
-        
-        noteSequence.push(item.note);
-        recorded.textContent = noteSequence.join(" - ");
-    });
-
+    key.classList.add(!item.sharp ? "white" : "black");
+    key.addEventListener("click", createItemKeyListener);
     return key;
-});
+}
+
+const keys = NOTES.map(createItemKey);
 
 play.addEventListener("click", () => {
     noteSequence.forEach((n, i) => {
