@@ -9,6 +9,10 @@ const notes = [
 ];
 
 const piano = document.querySelector("#piano");
+const recorded = document.querySelector("#recorded");
+const play = document.querySelector("#play");
+const clear = document.querySelector("#clear");
+const noteSequence = [];
 
 const keys = notes.map((item) => {
     const key = document.createElement("div");
@@ -16,6 +20,17 @@ const keys = notes.map((item) => {
     key.dataset.note = item.note;
 
     key.classList.add(item.sharp === false ? "white" : "black");
+
+    key.addEventListener("click", () => {
+        key.classList.add("active");
+        setTimeout(() => {
+            key.classList.remove("active");
+        }, 200);
+        
+        noteSequence.push(item.note);
+
+        recorded.textContent = noteSequence.join(" - ");
+    });
 
     return key;
 });
